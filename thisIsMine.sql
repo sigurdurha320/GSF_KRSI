@@ -340,7 +340,7 @@ DELIMITER ☺
 create trigger insertIntoSemester before insert on CourseSemester
 for each row
 begin
-    if(SELECT EXISTS(SELECT * FROM Semester WHERE semNumber=new.semNumber and s_id=new.s_id))#check if a semester needs to be added
+    if(SELECT NOT EXISTS(SELECT * FROM Semester WHERE semNumber=new.semNumber and s_id=new.s_id))#check if a semester needs to be added
     then
 		set @dateScheduled=now();
 		if(select count(*) from Semester where s_id = new.s_id)>0
